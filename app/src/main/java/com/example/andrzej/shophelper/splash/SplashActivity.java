@@ -20,8 +20,8 @@ public class SplashActivity extends Activity {
         splashDelay();
     }
 
-    private void splashDelay(){
-        new Handler().postDelayed(new Runnable(){
+    private void splashDelay() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
