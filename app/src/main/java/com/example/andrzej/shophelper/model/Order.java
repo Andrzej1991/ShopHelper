@@ -6,11 +6,21 @@ package com.example.andrzej.shophelper.model;
 
 public class Order {
 
+    private boolean sent;
     private int quantity;
     private String name;
     private String address;
     private String description;
     private String numberOfLanding;
+
+
+    public boolean getSent() {
+        return sent;
+    }
+
+    public void setSent(boolean sent) {
+        this.sent = sent;
+    }
 
     public int getQuantity() {
         return quantity;

@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ShopHelper</string>
     <string name="add_order">Add order</string>
+    <string name="show_orders">Show orders</string>
+    <string name="finished">Finished Orders</string>
+    <string name="unfinished">Unfinished Orders</string>
+    <string name="all">All Orders</string>
 </resources>
