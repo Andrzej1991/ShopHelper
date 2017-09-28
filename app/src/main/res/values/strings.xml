@@ -5,4 +5,15 @@
     <string name="finished">Finished Orders</string>
     <string name="unfinished">Unfinished Orders</string>
     <string name="all">All Orders</string>
+    <string name="add_address">Dodaj Adres</string>
+    <string name="description">Opis</string>
+    <string name="numberOfLanding">Numer listu</string>
+    <string name="add_name">Dodaj nazwę</string>
+    <string name="name">Nazwa</string>
+    <string name="add_description">Dodaj opis</string>
+    <string name="add_number_of_landing">Dodaj numer listu przewozowego</string>
+    <string name="quantity_item">Liczba przedmiotów</string>
+    <string name="send">Paczka wysłana</string>
+    <string name="save">ZAPISZ</string>
+    <string name="cancel">ANULUJ</string>
 </resources>
