@@ -6,15 +6,28 @@ package com.example.andrzej.shophelper.model;
 
 public class Order {
 
-    private boolean sent;
-    private int quantity;
+    private Integer id;
+    private Boolean sent;
+    private Integer quantity;
     private String name;
     private String address;
     private String description;
     private String numberOfLanding;
 
+    public Boolean isSent() {
+        return sent;
+    }
 
-    public boolean getSent() {
+    public Integer getId() {
+
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Boolean getSent() {
         return sent;
     }
 
@@ -26,7 +39,7 @@ public class Order {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

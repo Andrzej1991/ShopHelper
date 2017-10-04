@@ -16,4 +16,7 @@
     <string name="send">Paczka wysłana</string>
     <string name="save">ZAPISZ</string>
     <string name="cancel">ANULUJ</string>
+    <string name="allOrders">WSZYSTKIE</string>
+    <string name="sentOrders">WYSŁANE</string>
+    <string name="notSent">NIE WYSŁANE</string>
 </resources>

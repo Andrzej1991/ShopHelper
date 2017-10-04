@@ -12,7 +12,7 @@ import com.example.andrzej.shophelper.db.sql.table.Orders;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    private final static int DB_VERSION = 1;
+    private final static int DB_VERSION = 4;
     private final static String DB_NAME = "ShoperHelperDB.db";
 
     public DbHelper(Context context) {
@@ -25,20 +25,20 @@ public class DbHelper extends SQLiteOpenHelper {
                 "create table "
                         + Orders.TABLE_NAME
                         + " ( "
-                        + Orders.Columns.ID
+                        + Orders.Columns.ORDER_ID
                         + " integer primary key, "
-                        + Orders.Columns.NAME
+                        + Orders.Columns.ORDER_NAME
                         + " text, "
-                        + Orders.Columns.ADDRESS
+                        + Orders.Columns.ORDER_ADDRESS
                         + " text, "
-                        + Orders.Columns.DESCRIPTION
+                        + Orders.Columns.ORDER_DESCRIPTION
                         + " text, "
-                        + Orders.Columns.NUMBERS_OF_LANDING
+                        + Orders.Columns.ORDER_NUMBERS_OF_LANDING
                         + " text, "
-                        + Orders.Columns.SENT
-                        + " boolean, "
-                        + Orders.Columns.QTY
-                        + " integer )"
+                        + Orders.Columns.ORDER_QUANTITY
+                        + " integer, "
+                        + Orders.Columns.ORDER_SENT
+                        + " boolean ) "
         );
     }
 

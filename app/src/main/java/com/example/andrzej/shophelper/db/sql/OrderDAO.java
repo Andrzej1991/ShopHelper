@@ -1,5 +1,6 @@
 package com.example.andrzej.shophelper.db.sql;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
@@ -21,15 +22,27 @@ public class OrderDAO {
         dbHelper = new DbHelper(context);
     }
 
-    public List getAllPlaces() {
+    public void insertOrder(final Order order){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Orders.Columns.ORDER_NAME, order.getName());
+        contentValues.put(Orders.Columns.ORDER_ADDRESS, order.getAddress());
+        contentValues.put(Orders.Columns.ORDER_DESCRIPTION, order.getDescription());
+        contentValues.put(Orders.Columns.ORDER_NUMBERS_OF_LANDING, order.getNumberOfLanding());
+        contentValues.put(Orders.Columns.ORDER_QUANTITY, order.getQuantity());
+        contentValues.put(Orders.Columns.ORDER_SENT, order.getSent());
+        dbHelper.getWritableDatabase().insert(Orders.TABLE_NAME, null, contentValues);
+    }
+
+    public List getAllOrder(String where, String[] selectionArg) {
         Cursor cursor = dbHelper.getReadableDatabase().query(Orders.TABLE_NAME,
-                new String[]{Orders.Columns.NAME,
-                             Orders.Columns.ADDRESS,
-                             Orders.Columns.DESCRIPTION,
-                             Orders.Columns.QTY,
-                             Orders.Columns.NUMBERS_OF_LANDING,
-                             Orders.Columns.SENT},
-                null, null, null, null, null
+                new String[]{Orders.Columns.ORDER_ID,
+                             Orders.Columns.ORDER_NAME,
+                             Orders.Columns.ORDER_ADDRESS,
+                             Orders.Columns.ORDER_DESCRIPTION,
+                             Orders.Columns.ORDER_QUANTITY,
+                             Orders.Columns.ORDER_NUMBERS_OF_LANDING,
+                             Orders.Columns.ORDER_SENT},
+                where , selectionArg, null, null, null
                             );
 
         List results = new ArrayList<>();
@@ -39,19 +52,20 @@ public class OrderDAO {
                 results.add(mapCursorToOrder(cursor));
             }
         };
-
         return results;
     }
 
     private Order mapCursorToOrder(final Cursor cursor) {
-        int nameId = cursor.getColumnIndex(Orders.Columns.NAME);
-        int adressColumnId = cursor.getColumnIndex(Orders.Columns.ADDRESS);
-        int descriptionColumnId = cursor.getColumnIndex(Orders.Columns.DESCRIPTION);
-        int qtyId = cursor.getColumnIndex(Orders.Columns.QTY);
-        int numbersOfLandingId = cursor.getColumnIndex(Orders.Columns.NUMBERS_OF_LANDING);
-        int sentId = cursor.getColumnIndex(Orders.Columns.SENT);
+        int idColumnId = cursor.getColumnIndex(Orders.Columns.ORDER_ID);
+        int nameId = cursor.getColumnIndex(Orders.Columns.ORDER_NAME);
+        int adressColumnId = cursor.getColumnIndex(Orders.Columns.ORDER_ADDRESS);
+        int descriptionColumnId = cursor.getColumnIndex(Orders.Columns.ORDER_DESCRIPTION);
+        int qtyId = cursor.getColumnIndex(Orders.Columns.ORDER_QUANTITY);
+        int numbersOfLandingId = cursor.getColumnIndex(Orders.Columns.ORDER_NUMBERS_OF_LANDING);
+        int sentId = cursor.getColumnIndex(Orders.Columns.ORDER_SENT);
 
         Order order = new Order();
+        order.setId(cursor.getInt(idColumnId));
         order.setName(cursor.getString(nameId));
         order.setAddress(cursor.getString(adressColumnId));
         order.setDescription(cursor.getString(descriptionColumnId));
@@ -60,6 +74,5 @@ public class OrderDAO {
         order.setSent(Boolean.valueOf(cursor.getString(sentId)));
         return order;
     }
-
 
 }
