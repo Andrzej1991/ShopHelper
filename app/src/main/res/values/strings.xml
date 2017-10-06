@@ -19,4 +19,5 @@
     <string name="allOrders">WSZYSTKIE</string>
     <string name="sentOrders">WYSŁANE</string>
     <string name="notSent">NIE WYSŁANE</string>
+    <string name="no_barcode_found">Brak kodu</string>
 </resources>

@@ -1,7 +1,9 @@
 package com.example.andrzej.shophelper.fragments;
 
 
+
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +12,15 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.andrzej.shophelper.R;
+import com.example.andrzej.shophelper.ScanBarcodeActvity;
 import com.example.andrzej.shophelper.db.sql.OrderDAO;
 import com.example.andrzej.shophelper.model.Order;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.barcode.Barcode;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +53,8 @@ public class AddOrderDialogFragment extends DialogFragment {
     private Order mOrder;
     private OrderDAO mOrderDao;
 
+    private static final int RC_BARCODE_CAPTURE = 9001;
+    private static final String TAG = "BarcodeMain";
 
 
     public static AddOrderDialogFragment newInstance(int num) {
@@ -103,16 +112,6 @@ public class AddOrderDialogFragment extends DialogFragment {
         order.setQuantity(quantityItems);
         order.setSent(sent);
         mOrderDao.insertOrder(order);
-
-//        if (mOrder == null) {
-//            Order order = new Order(name, address, description, numbersOfLanding, quantityItems, send);
-//            mOrderDao.insertOrder(order);
-//        } else {
-//
-////            mOrder.setName(name);
-////            mOrderRepository.saveVisitor(mOrder);
-//        }
-
         dismiss();
     }
 
@@ -122,4 +121,31 @@ public class AddOrderDialogFragment extends DialogFragment {
 
     }
 
+    @OnClick(R.id.scanButton)
+    void scanZxing(View view) {
+        if (view.getId() == R.id.scanButton) {
+            Intent intent = new Intent(getActivity(), ScanBarcodeActvity.class);
+            startActivityForResult(intent, 0);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    Barcode barcode = data.getParcelableExtra("barcode");
+                    mNumberOfLanding.setText(barcode.displayValue);
+                } else {
+                    Toast.makeText(getActivity(), R.string.no_barcode_found, Toast.LENGTH_LONG).show();
+                }
+            } else {
+                super.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
 }
+
+
+
+

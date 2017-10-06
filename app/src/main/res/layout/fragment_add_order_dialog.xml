@@ -13,7 +13,7 @@
             android:id="@+id/name"
             android:layout_height="wrap_content"
             android:text="@string/name"
-            android:textSize="16sp"
+            android:textSize="12sp"
             app:layout_widthPercent="30%"
             android:layout_width="wrap_content" />
 
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/name"
             android:layout_marginTop="32dp"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:text="@string/add_address"
             app:layout_widthPercent="30%" />
 
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/address"
             android:layout_marginTop="32dp"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:text="@string/description"
             app:layout_widthPercent="30%" />
 
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/description"
             android:layout_marginTop="32dp"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:text="@string/numberOfLanding"
             app:layout_widthPercent="30%" />
 
@@ -53,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/name"
             android:layout_toRightOf="@id/name"
+            android:textSize="10sp"
             android:hint="@string/add_name" />
 
         <EditText
@@ -61,6 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/address"
             android:layout_toRightOf="@id/address"
+            android:textSize="10sp"
             android:hint="@string/add_address" />
 
         <EditText
@@ -69,15 +71,18 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/description"
             android:layout_toRightOf="@id/description"
+            android:textSize="10sp"
             android:hint="@string/add_description" />
+
 
         <EditText
             android:id="@+id/numberOfLanding_edit"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/numberOfLanding"
             android:layout_toRightOf="@id/numberOfLanding"
-            android:hint="@string/add_number_of_landing" />
+            android:hint="@string/add_number_of_landing"
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/additional_items"
@@ -85,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/numberOfLanding_edit"
             android:layout_marginTop="32dp"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:text="@string/quantity_item" />
 
         <TextView
@@ -95,8 +100,9 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/numberOfLanding_edit"
             android:layout_marginTop="32dp"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:text="0" />
+
 
         <SeekBar
             android:id="@+id/quantity_items_seekbar"
@@ -113,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/quantity_items_seekbar"
             android:layout_marginTop="32dp"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:text="@string/send"
             app:layout_widthPercent="30%" />
 
@@ -123,6 +129,17 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/send"
            />
+
+        <Button
+            android:id="@+id/scanButton"
+            android:layout_width="48dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_barcode"
+            android:elevation="0dp"
+            android:layout_above="@+id/additional_items_counter"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
 
     </android.support.percent.PercentRelativeLayout>
 
