@@ -37,14 +37,12 @@ public class ShowOrderAdapter extends RecyclerView.Adapter<ShowOrderAdapter.Show
 
     @Override
     public void onBindViewHolder(ShowOrderViewHolder holder, int position) {
-
-        Order order= mData.get(position);
+        Order order = mData.get(position);
         holder.mAdress.setText(order.getAddress());
         holder.mName.setText(order.getName());
         holder.mDescription.setText(order.getDescription());
         holder.mNumberOfLanding.setText(order.getNumberOfLanding());
         holder.mQuantity.setText(String.valueOf(order.getQuantity()));
-
     }
 
     @Override
@@ -56,20 +54,16 @@ public class ShowOrderAdapter extends RecyclerView.Adapter<ShowOrderAdapter.Show
 
         @BindView(R.id.adress)
         TextView mAdress;
-
         @BindView(R.id.name)
         TextView mName;
-
         @BindView(R.id.description)
         TextView mDescription;
-
         @BindView(R.id.quantity)
         TextView mQuantity;
-
         @BindView(R.id.numberOfLanding)
         TextView mNumberOfLanding;
 
-        public ShowOrderViewHolder(final View itemView){
+        public ShowOrderViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

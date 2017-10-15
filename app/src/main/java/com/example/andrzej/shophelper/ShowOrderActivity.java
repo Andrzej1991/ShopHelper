@@ -9,7 +9,9 @@ import android.view.View;
 
 import com.example.andrzej.shophelper.db.sql.OrderDAO;
 import com.example.andrzej.shophelper.model.Order;
+
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,7 +26,6 @@ public class ShowOrderActivity extends AppCompatActivity {
     RecyclerView mShowOrdersRecyclerView;
 
     private ShowOrderAdapter mShowOrderAdapter;
-
     private OrderDAO orderDAO;
 
     @Override
@@ -47,7 +48,7 @@ public class ShowOrderActivity extends AppCompatActivity {
         mShowOrdersRecyclerView.addItemDecoration(dividerItemDecoration);
         mShowOrderAdapter = new ShowOrderAdapter(this);
         mShowOrdersRecyclerView.setAdapter(mShowOrderAdapter);
-         }
+    }
 
     private void displayData(int showOrderMarker) {
         List<Order> allOrders;
@@ -71,18 +72,18 @@ public class ShowOrderActivity extends AppCompatActivity {
 
     }
 
-    @OnClick (R.id.allOrders)
-    void ShowAllOrders (View view) {
+    @OnClick(R.id.allOrders)
+    void ShowAllOrders(View view) {
         displayData(0);
     }
 
-    @OnClick (R.id.sentOrders)
-    void ShowSentOrders (View view) {
+    @OnClick(R.id.sentOrders)
+    void ShowSentOrders(View view) {
         displayData(1);
     }
 
-    @OnClick (R.id.notSentOrders)
-    void ShowNotSentOrders (View view) {
+    @OnClick(R.id.notSentOrders)
+    void ShowNotSentOrders(View view) {
         displayData(2);
     }
 }

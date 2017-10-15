@@ -31,25 +31,20 @@ public class ScanBarcodeActvity extends Activity {
     @BindView(R.id.camera_preview)
     SurfaceView cameraPreview;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_bardcode);
         ButterKnife.bind(this);
         createCameraSource();
-
-
     }
 
     private void createCameraSource() {
-
         BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this).build();
         final CameraSource cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setAutoFocusEnabled(true)
                 .setRequestedPreviewSize(1600, 1024)
                 .build();
-
         cameraPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -90,15 +85,14 @@ public class ScanBarcodeActvity extends Activity {
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
-            final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-                if(barcodes.size()>0) {
+                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+                if (barcodes.size() > 0) {
                     Intent intent = new Intent();
-                    intent.putExtra("barcode", barcodes.valueAt(0) );
+                    intent.putExtra("barcode", barcodes.valueAt(0));
                     setResult(CommonStatusCodes.SUCCESS, intent);
                     finish();
                 }
             }
         });
-
     }
 }

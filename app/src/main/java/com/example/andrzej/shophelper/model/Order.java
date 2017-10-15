@@ -19,7 +19,6 @@ public class Order {
     }
 
     public Integer getId() {
-
         return id;
     }
 

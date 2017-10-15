@@ -12,10 +12,9 @@ public interface Orders {
         String ORDER_ID = "_id";
         String ORDER_ADDRESS = "address";
         String ORDER_NAME = "name";
-        String ORDER_DESCRIPTION = "description" ;
+        String ORDER_DESCRIPTION = "description";
         String ORDER_NUMBERS_OF_LANDING = "numbers_of_landing";
         String ORDER_SENT = "sent";
         String ORDER_QUANTITY = "qty";
     }
-
 }

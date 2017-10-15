@@ -1,7 +1,6 @@
 package com.example.andrzej.shophelper.fragments;
 
 
-
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,33 +28,26 @@ import butterknife.OnClick;
 
 public class AddOrderDialogFragment extends DialogFragment {
 
+    private static final int RC_BARCODE_CAPTURE = 9001;
+    private static final String TAG = "BarcodeMain";
+
     @BindView(R.id.quantity_items_seekbar)
     SeekBar mQuantityItemsSeekBar;
-
     @BindView(R.id.additional_items_counter)
     TextView mAdditionalItemsCounter;
-
     @BindView(R.id.name_edit)
     EditText mName;
-
     @BindView(R.id.address_edit)
     EditText mAddress;
-
     @BindView(R.id.numberOfLanding_edit)
     EditText mNumberOfLanding;
-
     @BindView(R.id.description_edit)
     EditText mDescription;
-
     @BindView(R.id.send_switch)
     Switch mSendSwitch;
 
     private Order mOrder;
     private OrderDAO mOrderDao;
-
-    private static final int RC_BARCODE_CAPTURE = 9001;
-    private static final String TAG = "BarcodeMain";
-
 
     public static AddOrderDialogFragment newInstance(int num) {
         AddOrderDialogFragment f = new AddOrderDialogFragment();
@@ -74,7 +66,6 @@ public class AddOrderDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.fragment_add_order_dialog, container, false);
         ButterKnife.bind(this, v);
         mQuantityItemsSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -118,7 +109,6 @@ public class AddOrderDialogFragment extends DialogFragment {
     @OnClick(R.id.cancel)
     void onCancelClicked(View view) {
         dismiss();
-
     }
 
     @OnClick(R.id.scanButton)

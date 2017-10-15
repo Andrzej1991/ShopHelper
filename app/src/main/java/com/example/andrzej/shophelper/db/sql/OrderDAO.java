@@ -22,7 +22,7 @@ public class OrderDAO {
         dbHelper = new DbHelper(context);
     }
 
-    public void insertOrder(final Order order){
+    public void insertOrder(final Order order) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Orders.Columns.ORDER_NAME, order.getName());
         contentValues.put(Orders.Columns.ORDER_ADDRESS, order.getAddress());
@@ -36,22 +36,20 @@ public class OrderDAO {
     public List getAllOrder(String where, String[] selectionArg) {
         Cursor cursor = dbHelper.getReadableDatabase().query(Orders.TABLE_NAME,
                 new String[]{Orders.Columns.ORDER_ID,
-                             Orders.Columns.ORDER_NAME,
-                             Orders.Columns.ORDER_ADDRESS,
-                             Orders.Columns.ORDER_DESCRIPTION,
-                             Orders.Columns.ORDER_QUANTITY,
-                             Orders.Columns.ORDER_NUMBERS_OF_LANDING,
-                             Orders.Columns.ORDER_SENT},
-                where , selectionArg, null, null, null
-                            );
-
+                        Orders.Columns.ORDER_NAME,
+                        Orders.Columns.ORDER_ADDRESS,
+                        Orders.Columns.ORDER_DESCRIPTION,
+                        Orders.Columns.ORDER_QUANTITY,
+                        Orders.Columns.ORDER_NUMBERS_OF_LANDING,
+                        Orders.Columns.ORDER_SENT},
+                where, selectionArg, null, null, null
+        );
         List results = new ArrayList<>();
-
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
                 results.add(mapCursorToOrder(cursor));
             }
-        };
+        }
         return results;
     }
 
@@ -74,5 +72,4 @@ public class OrderDAO {
         order.setSent(Boolean.valueOf(cursor.getString(sentId)));
         return order;
     }
-
 }
