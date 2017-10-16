@@ -20,4 +20,8 @@
     <string name="sentOrders">WYSŁANE</string>
     <string name="notSent">NIE WYSŁANE</string>
     <string name="no_barcode_found">Brak kodu</string>
+    <string name="no">Nie</string>
+    <string name="yes">Tak</string>
+    <string name="delete_order">Usuwanie zamówienia</string>
+    <string name="delete_order_question">Czy usunąć zamówienie od: </string>
 </resources>

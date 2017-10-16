@@ -33,6 +33,13 @@ public class OrderDAO {
         dbHelper.getWritableDatabase().insert(Orders.TABLE_NAME, null, contentValues);
     }
 
+    public void deleteOrder(final Integer id) {
+        dbHelper.getWritableDatabase().delete(Orders.TABLE_NAME,
+                " " + Orders.Columns.ORDER_ID + " = ? ",
+                new String[]{id.toString()}
+        );
+    }
+
     public List getAllOrder(String where, String[] selectionArg) {
         Cursor cursor = dbHelper.getReadableDatabase().query(Orders.TABLE_NAME,
                 new String[]{Orders.Columns.ORDER_ID,

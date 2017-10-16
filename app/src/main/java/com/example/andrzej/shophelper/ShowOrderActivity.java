@@ -1,13 +1,19 @@
 package com.example.andrzej.shophelper;
 
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.andrzej.shophelper.db.sql.OrderDAO;
+import com.example.andrzej.shophelper.fragments.AddOrderDialogFragment;
 import com.example.andrzej.shophelper.model.Order;
 
 import java.util.List;
@@ -27,6 +33,7 @@ public class ShowOrderActivity extends AppCompatActivity {
 
     private ShowOrderAdapter mShowOrderAdapter;
     private OrderDAO orderDAO;
+    private static int mRecyclerViewState = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,7 @@ public class ShowOrderActivity extends AppCompatActivity {
                 new DividerItemDecoration(this, linearLayoutManager.getOrientation());
         mShowOrdersRecyclerView.addItemDecoration(dividerItemDecoration);
         mShowOrderAdapter = new ShowOrderAdapter(this);
+        mShowOrderAdapter.setOnLongClickListener(mOnLongClickListener);
         mShowOrdersRecyclerView.setAdapter(mShowOrderAdapter);
     }
 
@@ -74,16 +82,50 @@ public class ShowOrderActivity extends AppCompatActivity {
 
     @OnClick(R.id.allOrders)
     void ShowAllOrders(View view) {
-        displayData(0);
+        mRecyclerViewState = 0;
+        displayData(mRecyclerViewState);
     }
 
     @OnClick(R.id.sentOrders)
     void ShowSentOrders(View view) {
-        displayData(1);
+        mRecyclerViewState = 1;
+        displayData(mRecyclerViewState);
     }
 
     @OnClick(R.id.notSentOrders)
     void ShowNotSentOrders(View view) {
-        displayData(2);
+        mRecyclerViewState = 2;
+        displayData(mRecyclerViewState);
+    }
+
+    private final View.OnLongClickListener mOnLongClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(final View v) {
+            Order order = (Order) v.getTag();
+            showAskDialog(order);
+            return false;
+        }
+
+
+    };
+
+    private void showAskDialog(final Order order) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.delete_order)
+                .setMessage(getString(R.string.delete_order_question) + order.getName())
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        orderDAO.deleteOrder(order.getId());
+                        displayData(mRecyclerViewState);
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
     }
 }
