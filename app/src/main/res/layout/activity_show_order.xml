@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:id="@+id/relativeLayout">
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp">
 
         <TextView
             android:id="@+id/allOrders"
@@ -29,36 +30,51 @@
             android:id="@+id/sentOrders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
             android:text="@string/sentOrders"
             android:textColor="@color/colorAccent"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/notSentOrders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
             android:text="@string/notSent"
             android:textColor="@color/colorAccent"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/show_orders_recycle_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="456dp"
+        android:layout_below="@+id/relativeLayout"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/relativeLayout" />
+        android:layout_gravity="bottom" />
 
-</RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_new_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/colorAccent"
+        app:elevation="0dp"
+        app:layout_anchor="@id/show_orders_recycle_view"
+        app:layout_anchorGravity="bottom|end"
+        app:rippleColor="@android:color/black" />
+
+
+</android.support.design.widget.CoordinatorLayout>

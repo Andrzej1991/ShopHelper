@@ -1,6 +1,7 @@
 package com.example.andrzej.shophelper;
 
-import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -8,9 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.widget.Toast;
+
 
 import com.example.andrzej.shophelper.db.sql.OrderDAO;
 import com.example.andrzej.shophelper.fragments.AddOrderDialogFragment;
@@ -127,5 +127,19 @@ public class ShowOrderActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+    @OnClick(R.id.add_new_order)
+    public void addNewOrder() {
+        int mStackLevel = 0;
+        mStackLevel++;
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        AddOrderDialogFragment addOrderFragment = AddOrderDialogFragment.newInstance(mStackLevel);
+        addOrderFragment.show(ft, "dialog");
     }
 }
