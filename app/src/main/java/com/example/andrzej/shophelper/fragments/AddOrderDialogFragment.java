@@ -2,8 +2,10 @@ package com.example.andrzej.shophelper.fragments;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -55,6 +57,10 @@ public class AddOrderDialogFragment extends DialogFragment {
     private Order mOrder;
     private OrderDAO mOrderDao;
     private Context context;
+
+    public interface EditNameDialogListener {
+        void onFinishEditDialog();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -152,6 +158,15 @@ public class AddOrderDialogFragment extends DialogFragment {
                 super.onActivityResult(requestCode, resultCode, data);
             }
         }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        Activity activity = getActivity();
+        if(activity instanceof MyDialogCloseListener) {
+            ((MyDialogCloseListener)activity).handleDialogClose(dialog);
+        }
+
     }
 }
 

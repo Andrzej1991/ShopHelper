@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.example.andrzej.shophelper.db.sql.OrderDAO;
 import com.example.andrzej.shophelper.fragments.AddOrderDialogFragment;
+import com.example.andrzej.shophelper.fragments.MyDialogCloseListener;
 import com.example.andrzej.shophelper.model.Order;
 
 import java.util.List;
@@ -26,7 +27,7 @@ import butterknife.OnClick;
  * Created by root  on 18.09.17.
  */
 
-public class ShowOrderActivity extends AppCompatActivity {
+public class ShowOrderActivity extends AppCompatActivity implements MyDialogCloseListener {
 
     @BindView(R.id.show_orders_recycle_view)
     RecyclerView mShowOrdersRecyclerView;
@@ -141,5 +142,10 @@ public class ShowOrderActivity extends AppCompatActivity {
         ft.addToBackStack(null);
         AddOrderDialogFragment addOrderFragment = AddOrderDialogFragment.newInstance(mStackLevel);
         addOrderFragment.show(ft, "dialog");
+    }
+
+    @Override
+    public void handleDialogClose(DialogInterface dialog) {
+        displayData(mRecyclerViewState);
     }
 }
