@@ -1,9 +1,14 @@
 package com.example.andrzej.shophelper.fragments;
 
 
+import android.Manifest;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +18,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andrzej.shophelper.MainActivity;
 import com.example.andrzej.shophelper.R;
 import com.example.andrzej.shophelper.ScanBarcodeActvity;
 import com.example.andrzej.shophelper.db.sql.OrderDAO;
@@ -48,6 +54,13 @@ public class AddOrderDialogFragment extends DialogFragment {
 
     private Order mOrder;
     private OrderDAO mOrderDao;
+    private Context context;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 
     public static AddOrderDialogFragment newInstance(int num) {
         AddOrderDialogFragment f = new AddOrderDialogFragment();
@@ -111,11 +124,17 @@ public class AddOrderDialogFragment extends DialogFragment {
         dismiss();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @OnClick(R.id.scanButton)
     void scanZxing(View view) {
-        if (view.getId() == R.id.scanButton) {
-            Intent intent = new Intent(getActivity(), ScanBarcodeActvity.class);
-            startActivityForResult(intent, 0);
+        if (getActivity().checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(context, "We need permissions to acces your CAMERA!", Toast.LENGTH_SHORT).show();
+            ((MainActivity) context).checkCameraPermission();
+        } else {
+            if (view.getId() == R.id.scanButton) {
+                Intent intent = new Intent(getActivity(), ScanBarcodeActvity.class);
+                startActivityForResult(intent, 0);
+            }
         }
     }
 
