@@ -33,15 +33,13 @@ public class MainActivity extends Activity {
 
     @OnClick(R.id.add_order_btn)
     public void showDialog() {
-        int mStackLevel = 0;
-        mStackLevel++;
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment prev = getFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
             ft.remove(prev);
         }
         ft.addToBackStack(null);
-        AddOrderDialogFragment addOrderFragment = AddOrderDialogFragment.newInstance(mStackLevel);
+        AddOrderDialogFragment addOrderFragment = AddOrderDialogFragment.newInstance("New Task");
         addOrderFragment.show(ft, "dialog");
     }
 
@@ -56,7 +54,7 @@ public class MainActivity extends Activity {
             grantResults) {
         switch (requestCode) {
             case REQUEST_CODE_CAMERA:
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(getApplicationContext(), ScanBarcodeActvity.class);
                     startActivityForResult(intent, 0);
                 } else {
@@ -70,12 +68,12 @@ public class MainActivity extends Activity {
     }
 
     @TargetApi(23)
-    public void checkCameraPermission(){
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+    public void checkCameraPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
         }
         if (this.checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[] {Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
         }
     }
 

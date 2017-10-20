@@ -29,6 +29,8 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -58,9 +60,6 @@ public class AddOrderDialogFragment extends DialogFragment {
     private OrderDAO mOrderDao;
     private Context context;
 
-    public interface EditNameDialogListener {
-        void onFinishEditDialog();
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -76,10 +75,29 @@ public class AddOrderDialogFragment extends DialogFragment {
         return f;
     }
 
+    public static AddOrderDialogFragment newInstance(String text) {
+        AddOrderDialogFragment f = new AddOrderDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("test", text);
+        f.setArguments(args);
+        return f;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mOrderDao = new OrderDAO(getActivity());
+
+
+        Bundle bundle = getArguments();
+        if (bundle.containsKey("num")) {
+            int orderId = bundle.getInt("num");
+            mOrder = mOrderDao.getOrderById(orderId);
+        }
+        if (bundle.containsKey("text")) {
+            String mLabel = bundle.getString("text");
+        }
+
     }
 
     @Override
@@ -103,7 +121,20 @@ public class AddOrderDialogFragment extends DialogFragment {
 
             }
         });
+
+        if (mOrder != null) {
+            displayOrder();
+        }
         return v;
+    }
+
+    private void displayOrder() {
+        mName.setText(mOrder.getName());
+        mAddress.setText(mOrder.getAddress());
+        mDescription.setText(mOrder.getDescription());
+        mNumberOfLanding.setText(mOrder.getNumberOfLanding());
+        mQuantityItemsSeekBar.setProgress(mOrder.getQuantity());
+        mSendSwitch.setChecked(mOrder.isSent());
     }
 
     @OnClick(R.id.save)
@@ -121,7 +152,12 @@ public class AddOrderDialogFragment extends DialogFragment {
         order.setNumberOfLanding(numbersOfLanding);
         order.setQuantity(quantityItems);
         order.setSent(sent);
-        mOrderDao.insertOrder(order);
+        if (mOrder != null) {
+            order.setId(mOrder.getId());
+            mOrderDao.updateOrder(order);
+        } else {
+            mOrderDao.insertOrder(order);
+        }
         dismiss();
     }
 
@@ -163,8 +199,8 @@ public class AddOrderDialogFragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         Activity activity = getActivity();
-        if(activity instanceof MyDialogCloseListener) {
-            ((MyDialogCloseListener)activity).handleDialogClose(dialog);
+        if (activity instanceof MyDialogCloseListener) {
+            ((MyDialogCloseListener) activity).handleDialogClose(dialog);
         }
 
     }

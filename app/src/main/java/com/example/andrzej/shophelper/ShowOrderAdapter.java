@@ -24,6 +24,7 @@ public class ShowOrderAdapter extends RecyclerView.Adapter<ShowOrderAdapter.Show
     private final LayoutInflater mLayoutInflater;
     private final List<Order> mData = new ArrayList<>();
     private View.OnLongClickListener mOnLongClickListener;
+    private View.OnClickListener mOnClickListener;
 
     public ShowOrderAdapter(Context context) {
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -45,16 +46,23 @@ public class ShowOrderAdapter extends RecyclerView.Adapter<ShowOrderAdapter.Show
         holder.mNumberOfLanding.setText(order.getNumberOfLanding());
         holder.mQuantity.setText(String.valueOf(order.getQuantity()));
         holder.itemView.setTag(order);
+        holder.itemView.setOnClickListener(mOnClickListener);
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 return mOnLongClickListener.onLongClick(v);
             }
         });
+
+
     }
 
     public void setOnLongClickListener(View.OnLongClickListener onLongClickListener) {
         mOnLongClickListener = onLongClickListener;
+    }
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        mOnClickListener = onClickListener;
     }
 
     @Override

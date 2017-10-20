@@ -3,6 +3,7 @@ package com.example.andrzej.shophelper;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 
 import com.example.andrzej.shophelper.db.sql.OrderDAO;
@@ -31,6 +33,9 @@ public class ShowOrderActivity extends AppCompatActivity implements MyDialogClos
 
     @BindView(R.id.show_orders_recycle_view)
     RecyclerView mShowOrdersRecyclerView;
+
+    @BindView(R.id.allOrders)
+    TextView allOrdesButton;
 
     private ShowOrderAdapter mShowOrderAdapter;
     private OrderDAO orderDAO;
@@ -56,6 +61,7 @@ public class ShowOrderActivity extends AppCompatActivity implements MyDialogClos
         mShowOrdersRecyclerView.addItemDecoration(dividerItemDecoration);
         mShowOrderAdapter = new ShowOrderAdapter(this);
         mShowOrderAdapter.setOnLongClickListener(mOnLongClickListener);
+        mShowOrderAdapter.setOnClickListener(mOnClickListener);
         mShowOrdersRecyclerView.setAdapter(mShowOrderAdapter);
     }
 
@@ -99,6 +105,18 @@ public class ShowOrderActivity extends AppCompatActivity implements MyDialogClos
         displayData(mRecyclerViewState);
     }
 
+    void editOrder(Order order) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        AddOrderDialogFragment addOrderFragment = AddOrderDialogFragment.newInstance(order.getId());
+        addOrderFragment.show(ft, "dialog");
+
+    }
+
     private final View.OnLongClickListener mOnLongClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(final View v) {
@@ -108,6 +126,14 @@ public class ShowOrderActivity extends AppCompatActivity implements MyDialogClos
         }
 
 
+    };
+
+    private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Order order = (Order) v.getTag();
+            editOrder(order);
+        }
     };
 
     private void showAskDialog(final Order order) {
@@ -132,15 +158,13 @@ public class ShowOrderActivity extends AppCompatActivity implements MyDialogClos
 
     @OnClick(R.id.add_new_order)
     public void addNewOrder() {
-        int mStackLevel = 0;
-        mStackLevel++;
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment prev = getFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
             ft.remove(prev);
         }
         ft.addToBackStack(null);
-        AddOrderDialogFragment addOrderFragment = AddOrderDialogFragment.newInstance(mStackLevel);
+        AddOrderDialogFragment addOrderFragment = AddOrderDialogFragment.newInstance("New Record");
         addOrderFragment.show(ft, "dialog");
     }
 

@@ -40,6 +40,26 @@ public class OrderDAO {
         );
     }
 
+    public Order getOrderById(int orderId) {
+        Cursor cursor = dbHelper.getReadableDatabase().query(Orders.TABLE_NAME,
+                new String[]{Orders.Columns.ORDER_ID,
+                        Orders.Columns.ORDER_NAME,
+                        Orders.Columns.ORDER_ADDRESS,
+                        Orders.Columns.ORDER_DESCRIPTION,
+                        Orders.Columns.ORDER_QUANTITY,
+                        Orders.Columns.ORDER_NUMBERS_OF_LANDING,
+                        Orders.Columns.ORDER_SENT},
+                "_id = ?", new String[]{String.valueOf(orderId)}, null, null, null
+        );
+        Order results = new Order();
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                results = mapCursorToOrder(cursor);
+            }
+        }
+        return results;
+    }
+
     public List getAllOrder(String where, String[] selectionArg) {
         Cursor cursor = dbHelper.getReadableDatabase().query(Orders.TABLE_NAME,
                 new String[]{Orders.Columns.ORDER_ID,
@@ -76,7 +96,25 @@ public class OrderDAO {
         order.setDescription(cursor.getString(descriptionColumnId));
         order.setQuantity(cursor.getInt(qtyId));
         order.setNumberOfLanding(cursor.getString(numbersOfLandingId));
-        order.setSent(Boolean.valueOf(cursor.getString(sentId)));
+        if (cursor.getString(sentId).equals("0")) {
+            order.setSent(false);
+        } else {
+            order.setSent(true);
+        }
         return order;
     }
+
+    public void updateOrder(final Order order) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Orders.Columns.ORDER_NAME, order.getName());
+        contentValues.put(Orders.Columns.ORDER_ADDRESS, order.getAddress());
+        contentValues.put(Orders.Columns.ORDER_DESCRIPTION, order.getDescription());
+        contentValues.put(Orders.Columns.ORDER_NUMBERS_OF_LANDING, order.getNumberOfLanding());
+        contentValues.put(Orders.Columns.ORDER_QUANTITY, order.getQuantity());
+        contentValues.put(Orders.Columns.ORDER_SENT, order.getSent());
+        dbHelper.getWritableDatabase()
+                .update(Orders.TABLE_NAME, contentValues, "_id = ?",
+                        new String[]{String.valueOf(order.getId())});
+    }
+
 }
